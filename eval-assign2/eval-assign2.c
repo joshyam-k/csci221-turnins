@@ -117,7 +117,13 @@ int add_tiny(int8_t a, int8_t b){
     } else {
         add_to_exp = 0;
         sigcand_f = sigcand_added & 0x07;
-    } 
+    }
+    int8_t sign_f;
+    if (sigcand_f < 0){
+        sign_f = 0x80;
+    } else {
+        sign_f = 0x00;
+    }
     /* adjust and shift the exponent */
     uint8_t exp_f = (exp_to_use + add_to_exp) << 3;
     if ((exp_f - 7) > 7) {
@@ -127,7 +133,7 @@ int add_tiny(int8_t a, int8_t b){
         /* should return zero i think */
         final_ret = 0;
     } else {
-        final_ret = sigcand_f | exp_f;
+        final_ret = sign_f | sigcand_f | exp_f;
     }
     
     return final_ret;
