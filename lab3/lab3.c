@@ -38,6 +38,26 @@ linkedlist* create_ll(uint32_t val, int size){
     return ll_p;
 }
 
+
+void ll_val_remove(linkedlist a, int valrm){
+    /* still to do */
+}
+
+void free_ll(linkedlist* pLL){
+    /*intitialize a node*/
+    node* current;
+    /*while *(pLL).head != NULL we... */
+    while(pLL->head != NULL){
+        /*set current to point at the same thing as the head node */
+        current = pLL->head;
+        /*set the headnode in the linked list equal to the next node in the linked list*/
+        pLL->head = pLL->head->next;
+        /*remove the node that was not the end of the linked list*/
+        free(current);
+    }
+}
+
+
 void print_ll(linkedlist a){
     node* current = a.head;
 
@@ -54,9 +74,10 @@ int main(){
     ll.head = (node*) malloc(sizeof(node));
     ll.head->val = 1;
     ll.head->next = NULL;
-
+    
     linkedlist* a = create_ll(10, 4);
     print_ll(*a);
+    free_ll(a);
     return 0;
 }
 
