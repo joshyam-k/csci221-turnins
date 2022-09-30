@@ -1,12 +1,12 @@
 #include <stdint.h>
 
-typedef struct node {
+typedef struct NODE {
     uint32_t val;
-    struct node* next;
-} node_l;
+    struct NODE* next;
+} node;
 
 
-typedef struct linkedlist {
-    node_l* head;
+typedef struct LINKEDLIST {
+    node* head;
     int size;
-} linklist;
+} linkedlist;

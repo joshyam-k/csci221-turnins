@@ -4,61 +4,59 @@
 #include <stdlib.h>
 #include "lab3.h"
 
-void add_to_end(linklist a, uint32_t val) {
+void add_to_end(linkedlist a, uint32_t val) {
     /*initialize a pointer that points at the first node in our linked list */
-    node_l * current = a.head;
+    node* current = a.head;
     /*recall this is just *(current.next) != NULL */
     /*so we dereference current.next and check if it is equal to NULL which would indicate the end of the linked list*/
     /*if we are not at the end of the linked list we set current to point to the link to the next node*/
     while(current->next != NULL){
         current = current->next;
     }
-    /*once the above code terminates we know that we are at the last node in our linked list*/
+    /*once the above code terminates we know that current is at the last node in our linked list*/
     /* we allocate space for the node we are going to add*/
-    current->next = (node_l *)malloc(sizeof(node_l));
+    current->next = (node*)malloc(sizeof(node));
     /*we then set the value to the function input and set the node to point to NULL */
     current->next->val = val;
     current->next->next = NULL;
 }
 
-linklist* create_ll(uint32_t val, int size){
+linkedlist* create_ll(uint32_t val, int size){
     /*make use of add_to_end() to populate the linked list*/
     /*to start we have to intialize the linked list*/
-    linklist llist;
+    linkedlist llist;
     llist.head = NULL;
-    llist.head = (node_l *) malloc(sizeof(node_l));
+    llist.head = (node*) malloc(sizeof(node));
     llist.head->val = val;
     llist.head->next = NULL;
-    for(int i; i < size; i++){
+    /*using size - 1 because we initialized the linked list using the value*/
+    for(int i = 0; i < (size - 1); i++){
         add_to_end(llist, val);
     }
 
-    linklist* ll_p = &llist;
+    linkedlist* ll_p = &llist;
     return ll_p;
 }
 
+void print_ll(linkedlist a){
+    node* current = a.head;
 
-int* odd_rm(int* array, int size, int n_even){
-    int* ret = malloc(n_even*sizeof(int32_t));
-    for(int i; i < size; i++){
-        if(array[i] % 2 == 0){
-            ret[i] = array[i];
-        }
-    }
-    return ret;
-}
-
-
-void test(int* arr, int size){
-    for(int i; i < size; i++){
-        printf("item i is %d\n", arr[i]);
+    while(current != NULL){
+        printf("%d\n", current->val);
+        current = current->next;
     }
 }
+
 
 int main(){
-    int A[3] = {1,2,3};
-    int* pA = A;
-    test(pA, 3);
+    linkedlist ll;
+    ll.head = NULL;
+    ll.head = (node*) malloc(sizeof(node));
+    ll.head->val = 1;
+    ll.head->next = NULL;
+
+    linkedlist* a = create_ll(10, 4);
+    print_ll(*a);
     return 0;
 }
 
