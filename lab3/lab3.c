@@ -60,25 +60,37 @@ void free_ll(linkedlist* pLL){
 
 void print_ll(linkedlist a){
     node* current = a.head;
-
     while(current != NULL){
         printf("%d\n", current->val);
         current = current->next;
     }
 }
 
+int* odds_remove(int* arr, int arr_size, int n_even){
+    /*allocate memory for the array that we will return */
+    int* ret = malloc(n_even * sizeof(int32_t));
+    
+    for (int i = 0; i < arr_size; i++){
+        if(arr[i] % 2 == 0){
+            ret[i] = arr[i];
+        }
+    }
+    return ret;
+}
+
 
 int main(){
-    linkedlist ll;
-    ll.head = NULL;
-    ll.head = (node*) malloc(sizeof(node));
-    ll.head->val = 1;
-    ll.head->next = NULL;
-    
+    /*
     linkedlist* a = create_ll(10, 4);
     print_ll(*a);
     free_ll(a);
     return 0;
+    */
+    int a[5] = {1,2,3,4,5};
+    int* b = odds_remove(a, 5, 2);
+    for(int i = 0; i < 2; i++){
+        printf("item i is %d\n", b[i]);
+    }
 }
 
 
