@@ -36,8 +36,23 @@ int find_divisors(int* input_arr, int input_len, int n_divs, int** ret_arr1, int
 
 }
 
+char* substr_copy(char* string, int start, int end){
+    /* add 1 since we will have to add the NUL character at the end */
+    int len = end - start + 1;
+    char* substr = malloc(len*sizeof(char));
+    for(int i = start, len_count = 0; i <= end; i++){
+        if(i == end){
+            substr[len_count] = '\0';
+        } else {
+            substr[len_count] = string[i];
+        }
+        len_count++;
+    }
+    return substr;
+}
 
 int main(){
+    /*
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
     int* ret_a2;
@@ -46,5 +61,9 @@ int main(){
         printf("testing %d\n", ret_a1[i]);
         printf("testing %d\n", ret_a2[i]);
     }
+    */
+    char* inp_str = "hello";
+    char* ret_str = substr_copy(inp_str, 1, 3);
+    printf("we subset hello and get %s\n", ret_str);
     return 0;
 }
