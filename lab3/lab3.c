@@ -44,8 +44,9 @@ int ll_val_remove(linkedlist a, int valrm){
     node* current = a.head;
     while(current->next != NULL){;
         // steps
-        // check if current->value is valrm
-        // if so change current->next to current->next->next and then free current
+        // check if current->next->value is valrm
+        // if so make a temporary pointer to current->next 
+        // then change current->next to current->next->next and then free the temporary pointert
         if (current->next->val == valrm){
             node* to_del = current->next;
             current->next = current->next->next;
@@ -72,7 +73,7 @@ void free_ll(linkedlist* pLL){
     }
 }
 
-
+// helper function to visualize if linked list functions are working
 void print_ll(linkedlist a){
     node* current = a.head;
     while(current != NULL){
@@ -116,6 +117,7 @@ char* copy_char(char* string, int len){
 
 
 int main(){
+    /*
     node* header = NULL;
     node* second = NULL;
     node* third = NULL;
@@ -143,15 +145,14 @@ int main(){
     int ret = ll_val_remove(ll, 2);
     printf("occurences = %d\n", ret); 
     print_ll(ll);
-    /*
+    */
     linkedlist* a = create_ll(10, 4);
     print_ll(*a);
     free_ll(a);
-    return 0;
-    int a[8] = {1,2,3,4,5,6,8,20};
-    int* a_ret = odds_remove(a, 8, 5);
+    int b[8] = {1,2,3,4,5,6,8,20};
+    int* b_ret = odds_remove(b, 8, 5);
     for(int i = 0; i < 5; i++){
-        printf("item i is %d\n", a_ret[i]);
+        printf("item i is %d\n", b_ret[i]);
     }
     char* s = "hello";
     char let = 'e';
@@ -159,9 +160,8 @@ int main(){
     char* ret_s2 = copy_char(s, 6);
     printf("first instance of %c gives us %s\n", let, ret_s);
     printf("if we copy %s we get %s\n", s, ret_s2);
-    free(ret_s);
     free(ret_s2);
-    */
+    return 0;
 }
 
 
