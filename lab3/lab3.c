@@ -39,8 +39,23 @@ linkedlist* create_ll(uint32_t val, int size){
 }
 
 
-void ll_val_remove(linkedlist a, int valrm){
-    /* still to do */
+int ll_val_remove(linkedlist a, int valrm){
+    int total_removed = 0;
+    node* current = a.head;
+    while(current->next != NULL){;
+        // steps
+        // check if current->value is valrm
+        // if so change current->next to current->next->next and then free current
+        if (current->next->val == valrm){
+            node* to_del = current->next;
+            current->next = current->next->next;
+            free(to_del);
+            total_removed++;
+        } else {
+            current = current->next;
+        }
+    }
+    return total_removed;
 }
 
 void free_ll(linkedlist* pLL){
@@ -69,28 +84,84 @@ void print_ll(linkedlist a){
 int* odds_remove(int* arr, int arr_size, int n_even){
     /*allocate memory for the array that we will return */
     int* ret = malloc(n_even * sizeof(int32_t));
-    
-    for (int i = 0; i < arr_size; i++){
+    int even = n_even;
+    int i = 0;
+    for (i = 0, even = 0; i < arr_size; i++){
         if(arr[i] % 2 == 0){
-            ret[i] = arr[i];
+            ret[even++] = arr[i];
         }
     }
     return ret;
 }
 
+char* find_char(char* string, char c){
+    while(*string != '\0'){
+        if(*string == c){
+            return string;
+        }
+        string++;
+    }
+    char null_c[] = "\0";
+    string = null_c;
+    return string;
+}
+
+char* copy_char(char* string, int len){
+    char* copy = malloc((len + 1)*sizeof(char));
+    for(int i = 0; i < (len + 1); i++){
+        copy[i] = string[i];
+    }
+    return copy;
+}  
+
 
 int main(){
+    node* header = NULL;
+    node* second = NULL;
+    node* third = NULL;
+    node* fourth = NULL;
+
+    header = (node*)malloc(sizeof(node));
+    second = (node*)malloc(sizeof(node));
+    third = (node*)malloc(sizeof(node));
+    fourth = (node*)malloc(sizeof(node));
+
+    header->val = 1;
+    header->next = second;
+    second->val = 2;
+    second->next = third;
+    third->val = 2;
+    third->next = fourth;
+    fourth->val = 4;
+    fourth->next = NULL;
+
+    linkedlist ll;
+    ll.head = NULL;
+    ll.head = (node*)malloc(sizeof(node));
+    ll.head = header;
+    
+    int ret = ll_val_remove(ll, 2);
+    printf("occurences = %d\n", ret); 
+    print_ll(ll);
     /*
     linkedlist* a = create_ll(10, 4);
     print_ll(*a);
     free_ll(a);
     return 0;
-    */
-    int a[5] = {1,2,3,4,5};
-    int* b = odds_remove(a, 5, 2);
-    for(int i = 0; i < 2; i++){
-        printf("item i is %d\n", b[i]);
+    int a[8] = {1,2,3,4,5,6,8,20};
+    int* a_ret = odds_remove(a, 8, 5);
+    for(int i = 0; i < 5; i++){
+        printf("item i is %d\n", a_ret[i]);
     }
+    char* s = "hello";
+    char let = 'e';
+    char* ret_s = find_char(s, let);
+    char* ret_s2 = copy_char(s, 6);
+    printf("first instance of %c gives us %s\n", let, ret_s);
+    printf("if we copy %s we get %s\n", s, ret_s2);
+    free(ret_s);
+    free(ret_s2);
+    */
 }
 
 
