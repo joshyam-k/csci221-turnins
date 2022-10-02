@@ -2,8 +2,37 @@
 #include <stdlib.h>
 #include "eval-assign3.h"
 
+// helper function to insert a node
+// returns a pointer to the head node of the bst
+node* insert(node* curr, int x){
+    printf("got aqui");
+    if(curr == NULL){
+        printf("got here");
+        node* temp = (node*)malloc(sizeof(node));
+        temp->val = x;
+        temp->left = NULL;
+        temp->right = NULL;
+        return temp;
+    }
+    if(x < curr->val){
+        curr->left = insert(curr->left, x);
+    } else {
+        curr->right = insert(curr->right, x);
+    }
+    return curr;
+}
 
+void add_node_bst(bst b, int x){
+    b.head = insert(b.head, x);
+}
 
+void view_bst(node* node){
+    if(node != NULL){
+        view_bst(node->left);
+        printf("%d\n", node->val);
+        view_bst(node->right);
+    }
+}
 
 int find_divisors(int* input_arr, int input_len, int n_divs, int** ret_arr1, int** ret_arr2){
     if(n_divs == 0){
@@ -87,6 +116,12 @@ char* substr_copy(char* string, int start, int end){
 }
 
 int main(){
+    bst b;
+    b.head = NULL;
+    b.length = 1;
+    b.head->val = 50;
+    b.head->right = b.head->left = NULL;
+    printf("testing: %d\n", b.head->val);
     /*
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
@@ -96,7 +131,6 @@ int main(){
         printf("testing %d\n", ret_a1[i]);
         printf("testing %d\n", ret_a2[i]);
     }
-    */
     char* inp_str = "hello";
     char* ret_str = substr_copy(inp_str, 1, 3);
     char* test_str = "hello mr grader";
@@ -104,5 +138,6 @@ int main(){
     char* ret_test = find_string(test_str, test_substr, 15);
     printf("found and it is %s\n", ret_test);
     printf("we subset hello and get %s\n", ret_str);
+    */
     return 0;
 }
