@@ -36,6 +36,41 @@ int find_divisors(int* input_arr, int input_len, int n_divs, int** ret_arr1, int
 
 }
 
+// helper function for p3
+int string_eq_check(char* a, char* b){
+    // same thing as while(*a != '\0' && *b != '\0')
+    while(*a && *b){
+        // if the first elements of a and b are not the same then return 0
+        // the strings in this case are not the same
+        if(*a != *b){
+            return 0;
+        }
+        // otherwise iterate and keep checking
+        a++;
+        b++;
+    }
+    // if the loop breaks and *b == '\0' then the strings are the same
+    // because we made it through the whole string without returning 0
+    return (*b == '\0');
+}
+
+char* find_string(char* string, char* substring, int str_len){
+    while(*string != '\0'){
+        // we start by finding the first instance of the first character in substring in string
+        // we then check if the letters following that instance give us the substring
+        // if they do we return the pointer to that string
+        // otherwise we iterate the string and keep checking
+        if(*string == *substring && string_eq_check(string, substring)){
+            return string;
+        }
+        string++;
+    }
+    // if no instance exists return a pointer to the termination character in the original string
+    char* ret_p = &string[str_len + 1];
+    return ret_p;
+    
+}
+
 char* substr_copy(char* string, int start, int end){
     /* add 1 since we will have to add the NUL character at the end */
     int len = end - start + 1;
@@ -64,6 +99,10 @@ int main(){
     */
     char* inp_str = "hello";
     char* ret_str = substr_copy(inp_str, 1, 3);
+    char* test_str = "hello mr grader";
+    char* test_substr = "mr grader";
+    char* ret_test = find_string(test_str, test_substr, 15);
+    printf("found and it is %s\n", ret_test);
     printf("we subset hello and get %s\n", ret_str);
     return 0;
 }
