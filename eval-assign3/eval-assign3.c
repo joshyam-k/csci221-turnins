@@ -25,6 +25,38 @@ node* insert(node* curr, int x){
     }
 }
 
+node* removal(node* curr, int x){
+    if(curr == NULL){
+        return NULL;
+    }
+    if(x > curr->val){
+        curr->right = removal(curr->right, x);
+    } else if(x < curr->val) {
+        curr->left = removal(curr->left, x);
+    } else {
+        // first case is if it has no children we can just remove the node
+        if(curr->right == NULL && curr->left == NULL){
+            free(curr);
+            return NULL;
+        // note we can do || here because we already checked if both are null
+        } else if(curr->right == NULL || curr->left == NULL){
+            //initialize a pointer so that we can free the NULL node and still return the value to keep
+            node* to_keep;
+            // need to find which child it is
+            if (curr->right == NULL){
+                to_keep = curr->left;
+            } else {
+                to_keep = curr->right;
+            }
+            free(curr);
+            return to_keep;
+        } else {
+            // finally if there are two children the problem becomes tricky
+            // we have to free the node while inserting it's children back into the tree in the correct manner
+        } 
+    }
+}
+
 // actual code to insert a node
 // takes a bst as an argument 
 node* insert_node(bst b, int x){
@@ -32,6 +64,18 @@ node* insert_node(bst b, int x){
     b.head = insert(b.head, x);
     return b.head;
 }
+
+
+node* create_bst(int arr[], int arr_len){
+    bst b;
+    b.head = NULL;
+    b.length = arr_len;
+    for(int i = 0; i < arr_len; i++){
+        b.head = insert_node(b, arr[i]);
+    }
+    return b.head;
+}
+
 
 void view_bst(node* node){
     if(node != NULL){
@@ -128,7 +172,10 @@ int main(){
     b.length = 2;
     b.head =  insert_node(b, 10);
     b.head = insert_node(b, 50);
-    view_bst(b.head);
+    
+    int arr[5] = {1,2,3,4,5};
+    node* root = create_bst(arr, 5);
+    view_bst(root);
     //printf("test %d\n", b.head->left->val);
     /*
     b.head->val = 50;
