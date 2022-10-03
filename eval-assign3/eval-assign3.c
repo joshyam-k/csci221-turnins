@@ -125,7 +125,7 @@ int main(){
     b.head = NULL;
     b.length = 2;
     b.head = insert_node(b, 10);
-    b.head = insert_node(b, 50);
+    insert_node(b, 50);
     view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
     /*
