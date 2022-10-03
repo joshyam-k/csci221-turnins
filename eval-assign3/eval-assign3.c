@@ -28,7 +28,15 @@ node* insert(node* curr, int x){
 
 void insert_node(bst b, int x){
     // remember that b.head is just a pointer to the first node in the bst
-    b.head = insert(b.head, x);
+    if(b.head == NULL){
+        printf("at least we got here");
+        node* temp = (node*)malloc(sizeof(node));
+        temp->val = x;
+        temp->left = temp->right = NULL;
+        b.head = temp; 
+    } else {
+        b.head = insert(b.head, x);
+    }
 }
 
 void view_bst(node* node){
