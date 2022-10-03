@@ -9,7 +9,6 @@ node* insert(node* curr, int x){
     // once we find where the value should be added we create a new node for it
     // we have to allocate memory for it so that it survives beyond the function call
     if(curr == NULL){
-        printf("got here\n");
         node* temporary = (node*)malloc(sizeof(node));
         temporary->val = x;
         temporary->left = temporary->right = NULL;
@@ -28,17 +27,8 @@ node* insert(node* curr, int x){
 
 node* insert_node(bst b, int x){
     // remember that b.head is just a pointer to the first node in the bst
-    if(b.head == NULL){
-        printf("at least we got here");
-        node* temp = (node*)malloc(sizeof(node));
-        temp->val = x;
-        temp->left = temp->right = NULL;
-        b.head = temp;
-        return b.head;
-    } else {
-        b.head = insert(b.head, x);
-        return b.head;
-    }
+    b.head = insert(b.head, x);
+    return b.head;
 }
 
 void view_bst(node* node){
@@ -135,7 +125,8 @@ int main(){
     b.head = NULL;
     b.length = 2;
     b.head = insert_node(b, 10);
-    b.head = insert_node(b, 50);;
+    b.head = insert_node(b, 50);
+    view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
     /*
     b.head->val = 50;
