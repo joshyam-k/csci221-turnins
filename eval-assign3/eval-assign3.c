@@ -5,25 +5,33 @@
 // helper function to insert a node
 // returns a pointer to the head node of the bst
 node* insert(node* curr, int x){
-    printf("got aqui");
+    // if curr is a NULL pointer we need to initialize a bst node
     if(curr == NULL){
-        printf("got here");
+        // allocate memory
         node* temp = (node*)malloc(sizeof(node));
+        // initialize node values
         temp->val = x;
         temp->left = NULL;
         temp->right = NULL;
         return temp;
     }
+    // if x is less than *(curr).val then move to the left in the BST and work recursively
     if(x < curr->val){
         curr->left = insert(curr->left, x);
+        return curr;
+    // if x is greater than *(curr).val then move to the right in the BST and work recursively
     } else {
         curr->right = insert(curr->right, x);
+        return curr;
     }
-    return curr;
 }
 
-void add_node_bst(bst b, int x){
-    b.head = insert(b.head, x);
+void add_node_bst(bst b, int x){    
+    // we're being fed an initialized bst 
+    // and we need to insert a node in it
+    // intitialize a pointer to the head of the bst
+    node* current = b.head;
+    current = insert(current, x);
 }
 
 void view_bst(node* node){
@@ -118,10 +126,20 @@ char* substr_copy(char* string, int start, int end){
 int main(){
     bst b;
     b.head = NULL;
-    b.length = 1;
+    b.length = 2;
+    b.head = (node*)malloc(sizeof(node));
     b.head->val = 50;
     b.head->right = b.head->left = NULL;
-    printf("testing: %d\n", b.head->val);
+    add_node_bst(b, 10);
+    view_bst(b.head);
+    //printf("test %d\n", b.head->left->val);
+    /*
+    b.head->val = 50;
+    b.head->right = NULL;
+    b.head->left = NULL;
+    printf("testing %d\n", b.head->val);
+    free(b.head);
+    */
     /*
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
