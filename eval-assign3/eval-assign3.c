@@ -5,15 +5,13 @@
 // helper function to insert a node
 // returns a pointer to the head node of the bst
 node* insert(node* curr, int x){
-    // if curr is a NULL pointer we need to initialize a bst node
+    // once we find where the value should be added we create a new node for it
+    // we have to allocate memory for it so that it survives beyond the function call
     if(curr == NULL){
-        // allocate memory
-        node* temp = (node*)malloc(sizeof(node));
-        // initialize node values
-        temp->val = x;
-        temp->left = NULL;
-        temp->right = NULL;
-        return temp;
+        node* temporary = (node*)malloc(sizeof(node));
+        temporary->val = x;
+        temporary->left = temporary->right = NULL;
+        return temporary;
     }
     // if x is less than *(curr).val then move to the left in the BST and work recursively
     if(x < curr->val){
