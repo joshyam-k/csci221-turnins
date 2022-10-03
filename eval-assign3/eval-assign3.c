@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "eval-assign3.h"
 
 // helper function to insert a node
@@ -24,7 +25,7 @@ node* insert(node* curr, int x){
     }
 }
 
-void add_node_bst(bst b, int x){    
+void insert_node(bst b, int x){    
     // we're being fed an initialized bst 
     // and we need to insert a node in it
     // intitialize a pointer to the head of the bst
@@ -125,11 +126,15 @@ int main(){
     bst b;
     b.head = NULL;
     b.length = 2;
+    /*
+    b.length = 2;
     b.head = (node*)malloc(sizeof(node));
     b.head->val = 50;
     b.head->right = b.head->left = NULL;
-    add_node_bst(b, 10);
-    view_bst(b.head);
+    */
+    insert_node(b, 10);
+    printf("test %d\n", b.head->val);
+    //view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
     /*
     b.head->val = 50;
