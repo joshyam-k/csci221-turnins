@@ -25,6 +25,8 @@ node* insert(node* curr, int x){
     }
 }
 
+// actual code to insert a node
+// takes a bst as an argument 
 node* insert_node(bst b, int x){
     // remember that b.head is just a pointer to the first node in the bst
     b.head = insert(b.head, x);
@@ -124,8 +126,8 @@ int main(){
     bst b;
     b.head = NULL;
     b.length = 2;
-    b.head = insert_node(b, 10);
-    insert_node(b, 50);
+    b.head =  insert_node(b, 10);
+    b.head = insert_node(b, 50);
     view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
     /*
