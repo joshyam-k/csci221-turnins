@@ -26,16 +26,18 @@ node* insert(node* curr, int x){
     }
 }
 
-void insert_node(bst b, int x){
+node* insert_node(bst b, int x){
     // remember that b.head is just a pointer to the first node in the bst
     if(b.head == NULL){
         printf("at least we got here");
         node* temp = (node*)malloc(sizeof(node));
         temp->val = x;
         temp->left = temp->right = NULL;
-        b.head = temp; 
+        b.head = temp;
+        return b.head;
     } else {
         b.head = insert(b.head, x);
+        return b.head;
     }
 }
 
@@ -132,13 +134,8 @@ int main(){
     bst b;
     b.head = NULL;
     b.length = 2;
-    /*
-    b.head = (node*)malloc(sizeof(node));
-    b.head->val = 50;
-    b.head->right = b.head->left = NULL;
-    */
-    insert_node(b, 10);
-    printf("test %d\n", b.head->val);
+    b.head = insert_node(b, 10);
+    b.head = insert_node(b, 50);;
     //printf("test %d\n", b.head->left->val);
     /*
     b.head->val = 50;
