@@ -39,8 +39,9 @@ node* removal(node* curr, int x){
             free(curr);
             return NULL;
         // note we can do || here because we already checked if both are null
+        // if there is one child you just replace the node with its child and then free the original node
         } else if(curr->right == NULL || curr->left == NULL){
-            //initialize a pointer so that we can free the NULL node and still return the value to keep
+            //initialize a pointer so that we can free the NULL node and still return the child value
             node* to_keep;
             // need to find which child it is
             if (curr->right == NULL){
@@ -53,8 +54,19 @@ node* removal(node* curr, int x){
         } else {
             // finally if there are two children the problem becomes tricky
             // we have to free the node while inserting it's children back into the tree in the correct manner
-        } 
+            // in this case we can just replace the node to be deleted with the smallest valued node to the right of it
+            // we then remove that smallest valued node
+            node* min_to_right = curr->right;
+            while(min_to_right && min_to_right->left != NULL){
+                min_to_right = min_to_right->left;
+            }
+            curr->val = min_to_right->val;
+            // we have to clean things up by removing the smallest value to the right of the deleted node since
+            // we moved it to the location of the node to be deleted
+            curr->right = removal(curr->right, min_to_right->val);
+        }
     }
+    return curr;
 }
 
 // actual code to insert a node
@@ -65,6 +77,11 @@ node* insert_node(bst b, int x){
     return b.head;
 }
 
+node* remove_node(bst b, int x, int* n_rm){
+    *n_rm = 0;
+    b.head = removal(b.head, x);
+    return b.head;
+}
 
 node* create_bst(int arr[], int arr_len){
     bst b;
@@ -172,10 +189,10 @@ int main(){
     b.length = 2;
     b.head =  insert_node(b, 10);
     b.head = insert_node(b, 50);
-    
+    b.head = remove_node(b, 10);
     int arr[5] = {1,2,3,4,5};
-    node* root = create_bst(arr, 5);
-    view_bst(root);
+    //node* root = create_bst(arr, 5);
+    view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
     /*
     b.head->val = 50;
