@@ -71,10 +71,11 @@ node* removal(node* curr, int x){
 
 // actual code to insert a node
 // takes a bst as an argument 
-node* insert_node(bst b, int x){
+bst insert_node(bst b, int x){
     // remember that b.head is just a pointer to the first node in the bst
     b.head = insert(b.head, x);
-    return b.head;
+    b.length++;
+    return b;
 }
 
 node* remove_node(bst b, int x, int* n_rm){
@@ -83,6 +84,7 @@ node* remove_node(bst b, int x, int* n_rm){
     return b.head;
 }
 
+/*
 node* create_bst(int arr[], int arr_len){
     bst b;
     b.head = NULL;
@@ -92,7 +94,7 @@ node* create_bst(int arr[], int arr_len){
     }
     return b.head;
 }
-
+*/
 
 void view_bst(node* node){
     if(node != NULL){
@@ -187,10 +189,10 @@ int main(){
     bst b;
     b.head = NULL;
     b.length = 2;
-    b.head =  insert_node(b, 10);
-    b.head = insert_node(b, 50);
-    b.head = remove_node(b, 10);
-    int arr[5] = {1,2,3,4,5};
+    b =  insert_node(b, 10);
+    b = insert_node(b, 50);
+    //b.head = remove_node(b, 10);
+    //int arr[5] = {1,2,3,4,5};
     //node* root = create_bst(arr, 5);
     view_bst(b.head);
     //printf("test %d\n", b.head->left->val);
