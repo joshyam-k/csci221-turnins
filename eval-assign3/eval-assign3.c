@@ -78,23 +78,21 @@ bst insert_node(bst b, int x){
     return b;
 }
 
-node* remove_node(bst b, int x, int* n_rm){
-    *n_rm = 0;
+bst remove_node(bst b, int x){
     b.head = removal(b.head, x);
-    return b.head;
+    return b;
 }
 
-/*
-node* create_bst(int arr[], int arr_len){
+bst create_bst(int arr[], int arr_len){
     bst b;
     b.head = NULL;
     b.length = arr_len;
     for(int i = 0; i < arr_len; i++){
-        b.head = insert_node(b, arr[i]);
+        b = insert_node(b, arr[i]);
     }
-    return b.head;
+    return b;
 }
-*/
+
 
 void view_bst(node* node){
     if(node != NULL){
@@ -186,23 +184,11 @@ char* substr_copy(char* string, int start, int end){
 }
 
 int main(){
-    bst b;
-    b.head = NULL;
-    b.length = 2;
-    b =  insert_node(b, 10);
-    b = insert_node(b, 50);
-    //b.head = remove_node(b, 10);
-    //int arr[5] = {1,2,3,4,5};
-    //node* root = create_bst(arr, 5);
-    view_bst(b.head);
-    //printf("test %d\n", b.head->left->val);
-    /*
-    b.head->val = 50;
-    b.head->right = NULL;
-    b.head->left = NULL;
-    printf("testing %d\n", b.head->val);
-    free(b.head);
-    */
+    int arr[5] = {1,2,3,4,5};
+    bst root = create_bst(arr, 5);
+    root = insert_node(root, 10);
+    root = remove_node(root, 2);
+    view_bst(root.head);
     /*
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
