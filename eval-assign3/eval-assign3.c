@@ -78,15 +78,37 @@ bst insert_node(bst b, int x){
     return b;
 }
 
-bst remove_node(bst b, int x){
-    b.head = removal(b.head, x);
-    return b;
+// helper function to count the number of nodes in a bst
+int count(node *root){
+    if(root == NULL){
+        return 0;
+    }
+    else{
+        return 1 + count(root->left) + count(root->right);
+    }
 }
+
+// this returns the bst and we get back the number of removed nodes by using
+// a pointer as a function argument
+bst remove_node(bst b, int x, int* n_rm){
+    *n_rm = 0;
+    int prev_size = count(b.head);
+    b.head = removal(b.head, x);
+    int new_size = count(b.head);
+    if (prev_size == new_size){
+        return b;
+    } else {
+        b.length--;
+        n_rm++;
+        return b;
+    }
+}
+
 
 bst create_bst(int arr[], int arr_len){
     bst b;
     b.head = NULL;
-    b.length = arr_len;
+    b.length = 0;
     for(int i = 0; i < arr_len; i++){
         b = insert_node(b, arr[i]);
     }
@@ -186,9 +208,14 @@ char* substr_copy(char* string, int start, int end){
 int main(){
     int arr[5] = {1,2,3,4,5};
     bst root = create_bst(arr, 5);
+    printf("length is %d\n", root.length);
     root = insert_node(root, 10);
-    root = remove_node(root, 2);
+    int n_rm;
+    int* Pn_rm = &n_rm;
+    root = remove_node(root, 2, Pn_rm);
+    root = remove_node(root, 8, Pn_rm);
     view_bst(root.head);
+    printf("now the length %d\n", root.length);
     /*
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
