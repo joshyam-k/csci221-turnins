@@ -115,6 +115,25 @@ bst create_bst(int arr[], int arr_len){
     return b;
 }
 
+// helper function to free a tree
+void free_nodes(node* current){
+    if(current == NULL){
+        return;
+    }
+    // this will start at the bottom of the tree
+    // so we delete subtrees before deleting nodes
+    // and work our way up
+    free_nodes(current->right);
+    free_nodes(current->left);
+    free(current);
+}
+
+void free_bst(bst* pB){
+    // function takes a pointer to a bst
+    // then uses helper function to free the entire tree
+    node* curr = pB->head;
+    free_nodes(curr);
+}
 
 void view_bst(node* node){
     if(node != NULL){
@@ -206,6 +225,7 @@ char* substr_copy(char* string, int start, int end){
 }
 
 int main(){
+    // tests for p1
     int arr[5] = {1,2,3,4,5};
     bst root = create_bst(arr, 5);
     printf("length is %d\n", root.length);
@@ -216,7 +236,10 @@ int main(){
     root = remove_node(root, 8, Pn_rm);
     view_bst(root.head);
     printf("now the length %d\n", root.length);
-    /*
+    bst* proot = &root;
+    free_bst(proot);
+    
+    // tests for p2 
     int a[4] = {2, 3, 4, 10};
     int* ret_a1;
     int* ret_a2;
@@ -225,6 +248,8 @@ int main(){
         printf("testing %d\n", ret_a1[i]);
         printf("testing %d\n", ret_a2[i]);
     }
+
+    //tests for p3 and p4
     char* inp_str = "hello";
     char* ret_str = substr_copy(inp_str, 1, 3);
     char* test_str = "hello mr grader";
@@ -232,6 +257,5 @@ int main(){
     char* ret_test = find_string(test_str, test_substr, 15);
     printf("found and it is %s\n", ret_test);
     printf("we subset hello and get %s\n", ret_str);
-    */
     return 0;
 }
