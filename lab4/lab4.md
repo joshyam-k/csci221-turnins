@@ -42,8 +42,7 @@ content from another source
 >>>>>>> NEW-branch-to-be-merged
 ```
 
-
-
+This indicates the source of the merge conflict and it is often easiest to just choose what content you want to leave and then remove all of the `=`, `<`, and branch names and then add, commit, and push the change. This is a very logical strategy as we essential make a new copy of the file which highlights the merge conflict, we then fix the conflict in that file and push our changes.
 
 
 
