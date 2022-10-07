@@ -22,15 +22,30 @@ done!
 
 This sort of depends on where you are in the whole process of `git add`, `git commit`, and `git push`.
 
-If you have changed a file that you didn't want to change but haven't run `git add` then you can use `git checkout <file_name>`
+- If you have changed a file that you didn't want to change but haven't run `git add` then you can use `git checkout <file_name>`
 
-If you have run `git add` but haven't committed yet then you can run `git reset HEAD <file_name>`. At this point the changes have been unstaged but they still exist so you can then use `git checkout <file_name>`.
+- If you have run `git add` but haven't committed yet then you can run `git reset HEAD <file_name>`. At this point the changes have been unstaged but they still exist so you can then use `git checkout <file_name>`.
 
-If you have added and committed a file but have not pushed it you can run `git reset HEAD~` followed by `git checkout <file_name>`
+- If you have added and committed a file but have not pushed it you can run `git reset HEAD~` followed by `git checkout <file_name>`
 
-If you have added, committed, and pushed a file then you can run `git revert <commit-hash>` where the commit-hash is one from before the one that you recently pushed.
+- If you have added, committed, and pushed a file then you can run `git revert <commit-hash>` where the commit-hash is one from before the one that you recently pushed.
 
 (c)
+
+When you experience a merge conflict in git you will see the following pattern in the file that experienced the conflict
+
+```
+<<<<<<< HEAD 
+content from one source
+=======
+content from another source
+>>>>>>> NEW-branch-to-be-merged
+```
+
+
+
+
+
 
 
 
