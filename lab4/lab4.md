@@ -45,6 +45,38 @@ content from another source
 This indicates the source of the merge conflict and it is often easiest to just choose what content you want to leave and then remove all of the `=`, `<`, and branch names and then add, commit, and push the change. This is a very logical strategy as we essential make a new copy of the file which highlights the merge conflict, we then fix the conflict in that file and push our changes.
 
 
+## 3
+
+I am going to redo question 3 on the numbers lab. As is my code looks like 
+
+```
+int overflow_check(int32_t a, int32t_b){
+    int 32_t res = a + b;
+    if (a > 0 && b > 0 && res <= 0){
+        return 1;
+    } else if(a < 0 && b < 0 && res >= 0){ 
+        return 2;
+    } else {
+        return 0;
+    }
+}
+
+void overflow(int32_t a, int32_t b){
+    int64_t check = (int64_t) a + (int64_t) b;
+    int64_t res;
+    int tfoverflow = overflow_check(a, b);
+    if (tfoverflow == 0) {
+        res = (int64_t) (a + b);
+    } else if(tfoverflow == 1){
+        res = ((int64_t) (a + b)) + pow(2, 32); 
+    } else {
+        res = ((int64_t) (a + b)) - pow(2, 32);
+    }
+}
+```
+
+There are a couple of issues with the code that I had originally written. First and foremost, checking for signed overflow after the addition takes place is undefined in C. In both the `overflow_check()` and `overflow()` function I cause undefined behavior which means that the function simply doesn't work how I want it to work. Secondly, we are supposed to return the output as a 64 bit integer but my `overflow()` function does not return anything. Finally, I create a variable called
+check but I do not ever compare my output to that check and so it is simply not being used at all.
 
 
 
