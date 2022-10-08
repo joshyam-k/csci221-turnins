@@ -78,6 +78,13 @@ void overflow(int32_t a, int32_t b){
 There are a couple of issues with the code that I had originally written. First and foremost, checking for signed overflow after the addition takes place is undefined in C. In both the `overflow_check()` and `overflow()` function I cause undefined behavior which means that the function simply doesn't work how I want it to work. Secondly, we are supposed to return the output as a 64 bit integer but my `overflow()` function does not return anything. Finally, I create a variable called
 check but I do not ever compare my output to that check and so it is simply not being used at all.
 
+In this case I have been told that the defect has to do with this undefined behavior and that this is what is causing the failure conditions so I do not need to propose a new hypothesis. This is certainly a case when I do not have to perform the full scientific debugging process.
+
+Thinking about a fix
+- clearly a fix has to do with detecting signed overflow without checking for overflow after they have been added.
+- need to come up with a comparison that does not include adding them
+- one idea: if `b > 0` and  `a > INT_MAX - b` will we detect the overflow without introducing undefined behavior?
+
 
 
 
