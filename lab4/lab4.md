@@ -84,9 +84,10 @@ Thinking about a fix
 - clearly a fix has to do with detecting signed overflow without checking for overflow after they have been added.
 - need to come up with a comparison that does not include adding them
 - one idea: if `b > 0` and  `a > INT_MAX - b` will we detect the overflow without introducing undefined behavior?
+    - I think it will do what we want as long as (INT_MAX - b) is evaluated before the comparison
+    - so we should likely do `a > (INT_MAX - b)` just to be safe
 
 
-
-
+The fixed code will be in a new file called `lab4_p3.c`
 
 
