@@ -19,6 +19,10 @@ Done!
 
 (b)
 
+As usual you should first run `git status` to make sure that you don't have any staged or unstaged changes. Then you must first locate the commit hash from the version of the repository that you wish to move back to you can use `git log` to find this information.
+
+If you are certain that you don't care about any of the changes between that commit and the current state of your repository then you can run `git reset --hard <commit_hash>`. Be warned that this will rewrite the history of your branch so any commits that you made after `<commit_hash>` will no longer be available.
+
 (c)
 
 In version control a branch is simply a snapshot (copy) of a repository. Branches are extremely useful when you want to experiement with the code or try things with the code in isolation. In other words you can make changes and try things out without affecting the repository itself. It also provides structure for implementing changes from various people in a more checked way. Before a branch is merged back into the main repository people can review it and make sure that they agree
