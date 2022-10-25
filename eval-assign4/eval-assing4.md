@@ -7,7 +7,7 @@ I would accomplish this by using the absolute path name inside of whatever comma
 
 (b)
 
-I use zsh (which is a unix shell built on top of bash) and I use 
+I use zsh (which is a unix shell built on top of bash) and a copy of this file can be found in `zshrc_file` in this repository folder. 
 
 (c)
 
@@ -30,4 +30,17 @@ If you are certain that you don't care about any of the changes between that com
 In version control a branch is simply a snapshot (copy) of a repository. Branches are extremely useful when you want to experiement with the code or try things with the code in isolation. In other words you can make changes and try things out without affecting the repository itself. It also provides structure for implementing changes from various people in a more checked way. Before a branch is merged back into the main repository people can review it and make sure that they agree
 with/want the changes before they are added. 
 
-You can use local branches in git by doing `git checkout -b branch_name` now you can commit to this branch and make changes to it. When you're ready to merge the branch back into the main branch (repository) you need to first run `git checkout main` to checkout the main branch that you want to merge your created branch back into. From here you run `git merge branch_name` to complete the merge. It can be good practice to delete a branch after it has been merged back into the main branch and you can do this with `git branch -d branch_name`.  
+You can use local branches in git by doing `git checkout -b branch_name` now you can commit to this branch and make changes to it. When you're ready to merge the branch back into the main branch (repository) you need to first run `git checkout main` to checkout the main branch that you want to merge your created branch back into. From here you run `git merge branch_name` to complete the merge. It can be good practice to delete a branch after it has been merged back into the main branch and you can do this with `git branch -d branch_name`.
+
+
+
+## 3 (Debugging)
+
+See `p3.c`
+
+## 4 (Debugging)
+
+See `p4.c`
+
+
+
