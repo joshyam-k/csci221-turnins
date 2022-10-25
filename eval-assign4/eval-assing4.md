@@ -7,6 +7,8 @@ I would accomplish this by using the absolute path name inside of whatever comma
 
 (b)
 
+I use zsh (which is a unix shell built on top of bash) and I use 
+
 (c)
 
 You can use `head -50 Logistics.tex | grep -o that | wc -l`. This works because the `-o` prints only the matched parts of a matching line which results in separate lines for each unique occurence of the word "that".
