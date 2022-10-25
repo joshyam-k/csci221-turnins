@@ -95,3 +95,4 @@ int main(int argc, char* argv[]){
 // I added some print statements at the top of the code to notify the users that the code expects integer inputs and so any non-integer inputs will 
 // be used in whatever way atoi() operates on them.
 
+// My thinking is that if we can be sufficiently communicative about what the function expects then this will go a long way in avoiding unwanted behavior from the function.
