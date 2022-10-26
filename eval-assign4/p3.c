@@ -22,6 +22,9 @@ int f(int x, int y){
 // thus the main work will be to adjust the code so that it works for all viable input values
 
 // one larger change will be to force y to be an unsigned integer since this algorithm simply will not work if it is negative
+// thus we mostly just have to fix the algorithm for the case when y is zero
+
+
 int f(int x, unsigned int y){
     int r = 1;
     if(y == 0){
@@ -37,8 +40,32 @@ int f(int x, unsigned int y){
     return r * x;
 }
 
+// we will run several tests
+// first we will test for a valid case and an edge case
+// then we will try a case where y is negative
+// then we will try a case when x and y are of the wrong type
+// then we will try a case where x is of a different incorrect type
+
+// as desired the function works as we want it to work for the first 2 cases
+// normally it would probably just throw an warning for the last 3 cases but because of the flags we include 
+// in our makefile, these warnings are treated as errors and the program will not complete for these cases.
+// in particular the last case is especially dangerous because it will invoke undefined behavior
+
 int main(){
-    int ret = f(1, 5);
-    printf("when we input f(1,5) we get %d\n", ret);
+    int t1 = f(2, 8);
+    int t2 = f(2, 0);
+    int t3 = f(2, -8);
+    int t4 = f(1.1, 1.9);
+    int t5 = f("c", 3);
+    printf("f(2, 8) = %d, f(2,0) = %d, f(2, -8) = %d, f(1.1,1.9) = %d, f(c, 3) = %d", t1, t2, t3, t4, t5);
     return 0;
 }
+
+
+
+
+
+
+
+
+
