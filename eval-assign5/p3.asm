@@ -1,10 +1,8 @@
 .text
 .globl main
 main:
-    li $a0, 1   # array
-    li $a1, 1   # permutations
-    li $a2, 1   # length
-    li $t0, 0   # index (i)
+    # array, permutations, and length are stored in $a0-$a2 respectively
+    li $t0, 0   # index (i = 0)
 loop:
     slt $t1, $t0, $a2   # (i < length)
     beq $t1, $zero, Exit   # if i < length is false then exit the loop

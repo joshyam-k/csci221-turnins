@@ -8,7 +8,7 @@ main:
    # };
    # data is offset 0 from the pointer
    # next is offset 4 from the pointer
-   li $a0, 1    # pointer to first node
+   # $a0 holds the pointer to the first node
    li $t0, 0    # this will hold the sum
 loop:
     beqz $a0, Exit  # if the pointer is zero then exit

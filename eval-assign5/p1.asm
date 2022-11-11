@@ -1,7 +1,7 @@
 .text
 .globl main
 main:
-    # importantly the register v0 is reserved for exit values so the result will be stored atllt4
+    # importantly the register v0 is reserved for exit values so the result will be stored at t4
     li $a0, 10
     li $t0, 2  # starting index (we will compare this to n to know when to stop)
     li $t1, 0  # set f_0 = 0
