@@ -16,6 +16,7 @@ This time since func1 calls func2 and we want the procedure to run in a seamless
 
 ```
 func1:
+    # function body
     addiu $sp, $sp, -32     # push frame
     sw $ra, 28($sp)         # store $ra
     sw $fp, 24($sp)         # store $fp
@@ -32,7 +33,7 @@ func2:
 
 (c)
 
-One big change is that we will need to store and restore the arguments and return values since we don't want to lose those values as they get passed into future stacks in the recursion. So we may need to store `$a0-$a3` as well as `$v0-$v1`.
+One big change is that we will need to store and restore the arguments since we don't want to lose those values as they get passed into future stacks in the recursion. So we will need to store and restore `$a0-$a3`
 
 (d)
 
@@ -45,6 +46,7 @@ Because we now use `$s0-$s7` which are callee saved, then we need to store these
 ```
 func1:
     addiu $sp, $sp, -64
+    # function body
     sw $ra, 60($sp)
     sw $fp, 56($sp)
     sw $s0, 52($sp)
@@ -80,6 +82,57 @@ func2:
 We no longer need to use the stack at all.
 
 # 2
+
+Since a tail recursive function returns a call to itself, it might look something like this
+
+```
+int foo(n){
+    if (n < 1){
+        return 1;
+    }
+    return foo(n-1);
+}
+```
+
+we can see that since this function just returns a call to itself then we can convert the internals of the function to a loop where we just perform the function internals over and over again until its time to exit
+
+# 3
+
+(a)
+
+```
+bltz $s1, $zero, Exit
+slti $t0, $s1, 8        # $t0 is 1 if s1 < 8
+beq $t0, $zero, Exit    # if s1 >= 8 then exit
+slli $t1, $s1, 2        # $t1 = input*4
+add $t2, $t1, $s0       # $t2 = input*4 + jumptable_address
+lw $t3, 0($t2)          # $t3 = jumptable[input]
+jr $t3                  # jump to jumptable[input]
+```
+
+(b)
+
+just use inputs as the place to jump to
+
+```
+
+```
+
+(c)
+
+need to map the inputs into 0-7 somehow (charlie says do this as simply as possible)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
