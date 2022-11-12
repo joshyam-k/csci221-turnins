@@ -101,7 +101,7 @@ we can see that since this function just returns a call to itself then we can co
 (a)
 
 ```
-bltz $s1, $zero, Exit
+bltz $s1, Exit
 slti $t0, $s1, 8        # $t0 is 1 if s1 < 8
 beq $t0, $zero, Exit    # if s1 >= 8 then exit
 slli $t1, $s1, 2        # $t1 = input*4
@@ -115,7 +115,15 @@ jr $t3                  # jump to jumptable[input]
 just use inputs as the place to jump to
 
 ```
-
+blti $s1, 4, Exit   # if input < 0 Exit
+slti $t0, $s1, 19       # if input >= 19 Exit
+beq $t0, $zero, Exit
+andi $t1, $s1, 0x0001   # $t1 will be 1 if $s1 is odd and 0 if $s1 is even
+bne $t1, $zero, Exit    # if $t1 is zero then $s1 was even so we exit whenever this is not the case
+slli $t2, $s1, 2        # $t2 = input*4
+add $t3, $t2, $s0       # $t3 = input*4 + jumptable_address
+lw $t4 0($t3)           # $t4 = jumptable[input]
+jr $t4                  # jump to jumptable[input]
 ```
 
 (c)
@@ -123,10 +131,68 @@ just use inputs as the place to jump to
 need to map the inputs into 0-7 somehow (charlie says do this as simply as possible)
 
 
+```
+blti $s1, 4, Exit
+slti $t0, $s1, 19
+beq $t0, $zero, Exit
+andi $t1, $s1, 0x0001
+bne $t1, $zero, Exit
+slli $t2, $s1, 2
+add $t3, $t2, $s0
+lw $t4 0($t3)           # $t4 = jumptable[input]
 
 
+```
+4- 0 (-4)
+6- 1 (-5)
+8- 2 (-6)
+10-3 (-7)
+12-4 (-8)
+14-5 (-9)
+16-6
+18-7
 
 
+# 4
+
+(a)
+
+```
+mult $s0, $s1
+mfhi $t0
+mflo $t1
+```
+
+(b)
+
+```
+div $s0, $s1
+mfhi $t0
+mflo $t1
+```
+
+# 5
+
+(a)
+
+```
+lwc1 $f0 0($a0)
+lwc1 $f2 0($a1)
+add.d $f4, $f0, $f2
+swcl $f4, 0($a3)
+```
+
+
+(b)
+
+it's unclear whether $a0 and $a1 hold pointers to the double precision floating point numbers 
+```
+lwc1 $f0, 0($a0)
+lwc1 $f2, 0($a1)
+cvt.f.d $f0, $f0
+cvt.f.d $f1, $f1
+mul.s $s0, $f0, $f1
+```
 
 
 
