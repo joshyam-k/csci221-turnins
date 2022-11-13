@@ -13,14 +13,6 @@ main:
 # need to figure out how much space to allocate for multarray and loop
 # need to 
 multarray:
-    # figure out how much space to allocate for frame
-    # 4*2*length*2 = 80
-    addiu $sp, $sp, -96
-    sw $ra, 92($sp)
-    sw $fp, 88($sp)
-    addiu $fp, $sp, 96
-    jal loop
-loop:
     addiu $sp, $sp, -32
     sw $ra, 28($sp)
     sw $fp, 24($sp)
@@ -40,11 +32,15 @@ loop:
     add $a1, $zero, $t6   # $a1 = arr2[i]
     jal mult32
     # place $v0 and $v1 in order in the empty arr3
+    sw $v0 
+    sw $v1
     lw $a0, 20($sp)       # restore array addresses
     lw $a1, 16($sp)         
-    $t0
+    lw $fp 24($sp)
+    lw $ra 28($sp)
+    addi $t0, $t0, 1      # i++
     addiu $sp, $sp, 32    # pop frame
-    j loop                # return back to top of loop 
+    j multarray           # return back to top of loop 
 done:
     jr $ra
 mult32:
