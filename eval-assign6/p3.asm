@@ -1,5 +1,5 @@
 .data
-arr_char: .space 40
+arr_char: .space 10 # 10 bytes for 10 characters
 sun: .asciiz "sunday\0"
 mon: .asciiz "monday\0"
 tue: .asciiz "tuesday\0"
