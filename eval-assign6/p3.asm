@@ -57,11 +57,11 @@ L6:
     la $a2 sat
     j Loop
 Loop:
-   lw $t5, 0($a2)
-   sw $t5 0($a1)
+   lb $t5, 0($a2)
+   sb $t5 0($a1)
    beqz $t5, Exit
-   addi $a1, $a1, 4
-   addi $a2, $a2, 4
+   addi $a1, $a1, 1
+   addi $a2, $a2, 1
    j Loop
 Exit:
     li $v0, 10
