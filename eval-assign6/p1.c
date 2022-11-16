@@ -23,6 +23,7 @@ uint32_t decay_t(uint16_t* values, uint16_t length, uint16_t decay, uint32_t tot
     return decay_t(values, length, decay, total, i);
 }
 
+// full use here
 uint32_t decay(uint16_t* values, uint16_t length, uint16_t decay){
     uint32_t total = 0;
     int i = 1;
@@ -32,8 +33,8 @@ uint32_t decay(uint16_t* values, uint16_t length, uint16_t decay){
 
 int main(){
     uint16_t values[8] = {1,2,3,20, 4,5, 10, 12};
-    uint32_t test2 = decay(values, 7, 2);
-    uint32_t test = decaying_sum(values, 7, 2);
+    uint32_t test2 = decay(values, 7, 1);
+    uint32_t test = decaying_sum(values, 7, 1);
     printf("we got %d and we expected %d", test2, test);
     return 0;
 }
