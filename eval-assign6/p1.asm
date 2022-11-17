@@ -9,9 +9,34 @@ decay:
     addiu $fp, $sp, 32
     li $t0, 0   # total initialized to zero
     li $t1, 1   # index initialized to one
+    la $a0, $s0 # $a0 is the first address of the array of values
+    li $a1, 5   # length
+    li $a2, 2   # decay
     jal decay_t
+    lw $fp, 24($sp)
+    lw $sp, 28($sp)
+    addiu $sp, $sp, 32
+    jr $ra
 decay_t:
-# will need to compute x^y in the function
+    addiu $sp, $sp, -32
+    sw $ra 28($sp)
+    sw $fp 24($sp)
+    addiu $fp, $sp, 32
+    slt $t3, $a1, $t1   # 1 if length < i
+    bne $t3, $zero, Exit
+    jal pow
+    lw $fp, 24($sp)
+    lw $sp, 28($sp)
+    addiu $sp, $sp, 32
+    # need to get values[length - i]
+    sub $t4, $a1, $t1
+    sll $t4, $t4, 2
+    add $t4, $t4, $a0
+    lw $t5, 0($t4)
+    div $v0, $t5
+    add $t0, $t0, $mflo
+    addi $t1, $t1, 1
+    j decay_t
 # assume x is in $a0, and y is in $a1
 pow: 
     addiu $sp, $sp, -4   # allocate space
@@ -35,3 +60,5 @@ return:
     addi $sp, $sp, 4    # pop frame
     jr $ra
 Exit:
+    lw $v0, 0($t0) 
+    jr $ra
