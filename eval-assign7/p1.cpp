@@ -81,6 +81,48 @@ bool car::move_to(double xnew, double ynew){
     return false;
 }
 
+double gasStation::getx() const{
+    return x;
+}
+
+double gasStation::gety() const{
+    return y;
+}
+
+double gasStation::getprice() const{
+    return price;
+}
+
+void gasStation::setx(double newx){
+    x = newx;
+}
+
+void gasStation::sety(double newy){
+    y = newy;
+}
+
+void gasStation::setprice(double newprice){
+    price = newprice;
+}
+
+gasStation::gasStation(double x_, double y_, double price_){
+    setx(x_);
+    sety(y_);
+    setprice(price_);
+}
+
+gasStation::gasStation(){
+    setx(0);
+    sety(0);
+    setprice(0);
+}
+
+gasStation::gasStation(const gasStation &other){
+    setx(other.getx());
+    sety(other.gety());
+    setprice(other.getprice());
+}
+
 car* which_can_move(car* array, int array_length, int* return_length,  double x, double y){
     // count how many can move
     int n_can_move = 0;
@@ -90,6 +132,7 @@ car* which_can_move(car* array, int array_length, int* return_length,  double x,
             n_can_move++;
         }
     }
+    // return length of return array via indirection
     *return_length = n_can_move;
     // allocate space on heap for array of appropriate size and fill it with copies of the cars that can move
     car* return_array = new car[n_can_move];
@@ -112,8 +155,6 @@ int main(){
     int newl = 0;
     int* pnewl = &newl;
     car* r_array = which_can_move(car_arr, 3, pnewl, 15, 30);
-    cout << "positon for car 1 was " << car1.getx() << "and its copy is at " << r_array[0].getx() << "\n";
-    cout << "return array is of length " << newl << "\n";
     return 0;
 }
 

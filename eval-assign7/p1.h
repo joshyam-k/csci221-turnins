@@ -21,3 +21,20 @@ public:
     car();
     car(const car &other);
 };
+
+class gasStation {
+private:
+    double x;
+    double y;
+    double price;
+public:
+    double getx() const;
+    double gety() const;
+    double getprice() const;
+    void setx(double newx);
+    void sety(double newy);
+    void setprice(double newprice);
+    gasStation(double x_, double y_, double price_);
+    gasStation();
+    gasStation(const gasStation &other);
+};
