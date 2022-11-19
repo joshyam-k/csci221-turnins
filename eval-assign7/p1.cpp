@@ -147,6 +147,90 @@ car* which_can_move(car* array, int array_length, int* return_length,  double x,
     return return_array;
 }
 
+// helper function to check if a car can move to a location via suffixes of the gas station array
+bool move_via_gas_suffix(car c, gasStation* station_array, int gsarray_len, double* cost, double x, double y){
+    bool found = false;
+    // start at beginning of gas station array and move across it
+    // once we can't get to
+    int success_index = 0;
+    for(int i = 0; i < gsarray_len; i++){
+        int possible_success_index = i;
+        int moves = 0;
+        car copy = c;
+        for(int j = i; j < gsarray_len; j++){
+            gasStation station = station_array[j];
+            bool check = copy.move_to(station.getx(), station.gety());
+            if(check == false){
+                break; 
+            }
+            moves++;
+            // otherwise continue in loop
+        }
+        if(moves == (gsarray_len - i)){
+            // if made it to the end of the array then final test is to see if it can
+            // reach the destination x, y
+            bool final_test = copy.move_to(x, y);
+            if(final_test == true){
+                success_index = possible_success_index;
+                found = true;
+                break;
+            }
+            // otherwise continue to next iteration of outer loop
+            continue;
+        }
+    }
+    if(found == false){
+        return false;
+    } else {
+        // move car through working suffix and keep track of price
+        *cost = 0;
+        for (int k = success_index; k < gsarray_len; k++){
+            gasStation station = station_array[k];
+            bool mv = c.move_to(station.getx(), station.gety());
+            *cost += station.getprice();
+        }
+        bool mv_final = c.move_to(x, y);
+        return true;
+    }
+}
+
+return_mv2 which_can_move2(car* car_array, gasStation* station_array, int carray_len, int gsarray_len, int* return_length,  double x, double y){
+    int n_can_move = 0;
+    struct return_mv2 struct_return;
+    for(int i = 0; i < carray_len; i++){
+        car cartest = car_array[i];
+        if(cartest.move_to(x, y) == true) {
+            n_can_move++;
+        } else {
+            double cost_dummy = 0;
+            if(move_via_gas_suffix(cartest, station_array, gsarray_len, &cost_dummy, x, y) == true) {
+                n_can_move++;
+            }
+        }
+    }
+    *return_length = n_can_move;
+    car* return_array = new car[n_can_move];
+    double* cost_array = new double[n_can_move];
+    for(int i = 0, j = 0; i < carray_len; i++){
+        car carcheck = car_array[i];
+        double cost_out = 0;
+        if(carcheck.move_to(x,y) == true) {
+            return_array[j] = carcheck;
+            cost_array[j] = 0;
+            j++;
+        } else if(move_via_gas_suffix(carcheck, station_array, gsarray_len, &cost_out, x, y ) == true){
+            return_array[j] = carcheck;
+            cost_array[j] = cost_out;
+            j++;
+        } else {
+            continue;
+        }
+    }
+    struct_return.ret_array = return_array;
+    struct_return.c_array = cost_array;
+    return struct_return;
+}
+
 int main(){
     car car1(5, 10, 20, 15, 9);
     car car2(1, 2, 20, 15, 9);

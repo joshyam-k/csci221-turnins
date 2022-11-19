@@ -38,3 +38,8 @@ public:
     gasStation();
     gasStation(const gasStation &other);
 };
+
+struct return_mv2 {
+    car* ret_array;
+    double* c_array;
+};
