@@ -216,8 +216,10 @@ struct return_mv2 which_can_move2(car* car_array, gasStation* station_array, int
             for(int k = success_index; k < gsarray_len; k++){
                 gasStation station = station_array[k];
                 bool mv = carcheck.move_to(station.getx(), station.gety());
+                double fuel_needed = carcheck.gettank_size() - carcheck.getcurrent_fuel();
+                double total_cost = fuel_needed/station.getprice();
+                cost_out += total_cost;
                 carcheck.setcurrent_fuel(carcheck.gettank_size());
-                cost_out += station.getprice();
             }
             bool mv_final = carcheck.move_to(x, y);
             return_array[j] = carcheck;
@@ -235,16 +237,14 @@ struct return_mv2 which_can_move2(car* car_array, gasStation* station_array, int
 int main(){
     car car1(1, 0, 20, 15, 9);
     car car2(1, 0, 20, 15, 9);
-    car car3(1, 0, 20, 15, 1);
+    car car3(1, 0, 20, 15, 0.6);
     car car_arr[3] = {car1, car2, car3};
     int newl = 0;
     gasStation gs1(1000, 1000, 4);
     gasStation gs2(10, 0, 5);
     gasStation gas_arr[1] = {gs2};
     struct return_mv2 ret = which_can_move2(car_arr, gas_arr, 3, 1, &newl, 21, 0);
-    cout << ret.c_array[1] << " " << ret.c_array[1] << newl;
-    //bool test = move_via_gas_suffix(car3, gas_arr, 1 , &newl, 21, 0);
-    //cout << test;
+    cout << ret.ret_array[2].getx() << " " << ret.ret_array[2].gety() << " cost is " << ret.c_array[2];
     return 0;
 }
 
