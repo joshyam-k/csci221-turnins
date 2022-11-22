@@ -37,6 +37,18 @@ linkedlist::linkedlist(){
     head = nullptr;
 }
 
+linkedlist::linkedlist(const linkedlist &other){
+    if(other.gethead() == nullptr){
+        return;
+    }
+    // pointer to the head node of the linkedlist
+    node* temp = other.gethead();
+    head = new node;
+    head.setstr(temp->);
+    head->next = nullptr;
+    curr = head;
+}
+
 node* linkedlist::gethead() const {
     return head;
 }
@@ -47,6 +59,7 @@ string linkedlist::getsortmethod() const{
 
 void linkedlist::setsortmethod(string newsortmethod){
     sortmethod = newsortmethod;
+    // this should potentially re-sort the list too
 }
 
 void linkedlist::sethead(node* head_new){

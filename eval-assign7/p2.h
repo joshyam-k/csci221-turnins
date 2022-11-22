@@ -23,8 +23,11 @@ public:
     string getsortmethod() const;
     void sethead(node* head_new);
     void setsortmethod(string newsortmethod);
+    // constructors
     linkedlist(node* head_);
     linkedlist();
+    //copy 
+    linkedlist(const linkedlist &other);
     // destructor
 
     void addnode(node newnode);
