@@ -8,8 +8,24 @@ private:
 public:
     string getstr() const;
     node* getnext() const;
-    void setstr(int str_new);
+    void setstr(string str_new);
     void setnext(node* next_new);
     node();
-    node(string str_);
+    node(string str_, node* next_);
+};
+
+class linkedlist {
+private:
+    node* head;
+    string sortmethod;
+public:
+    node* gethead() const;
+    string getsortmethod() const;
+    void sethead(node* head_new);
+    void setsortmethod(string newsortmethod);
+    linkedlist(node* head_);
+    linkedlist();
+    // destructor
+
+    void addnode(node newnode);
 };
