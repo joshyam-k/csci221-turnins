@@ -33,4 +33,15 @@ public:
 
     void addnode(node newnode);
     int getlength() const;
+    bool checksortlength() const;
+    bool checksortascii() const;
+    string* toarray() const;
 };
+
+
+
+
+
+
+
+

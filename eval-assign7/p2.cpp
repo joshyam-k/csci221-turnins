@@ -60,7 +60,7 @@ node* linkedlist::gethead() const {
     return head;
 }
 
-string linkedlist::getsortmethod() const{
+string linkedlist::getsortmethod() const {
     return sortmethod;
 }
 void linkedlist::setsortmethod(string newsortmethod){
@@ -68,9 +68,34 @@ void linkedlist::setsortmethod(string newsortmethod){
     // this should potentially re-sort the list too
 }
 
+bool linkedlist::checksortlength() const {
+    if (sortmethod == "length") {
+        return true;
+    } 
+    return false;
+}
+
+bool linkedlist::checksortascii() const {
+    if (sortmethod == "ascii") {
+        return true;
+    }
+    return false;
+}
 
 void linkedlist::sethead(node* head_new){
     head = head_new;
+}
+
+string* linkedlist::toarray() const {
+    
+    node* curr = head;
+    int len = this->getlength();
+    string* retarr = new string[len];
+    for(int i = 0; i < len; i++) {
+        retarr[i] = curr->getstr();
+        curr = curr->getnext();
+    }
+    return retarr;
 }
 
 void linkedlist::addnode(node newnode){
