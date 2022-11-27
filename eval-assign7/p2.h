@@ -17,18 +17,20 @@ public:
 class linkedlist {
 private:
     node* head;
-   // string sortmethod;
+    // either "length" or "ascii"
+    string sortmethod;
 public:
     node* gethead() const;
-    //string getsortmethod() const;
+    string getsortmethod() const;
     void sethead(node* head_new);
-    //void setsortmethod(string newsortmethod);
+    void setsortmethod(string newsortmethod);
     // constructors
-    linkedlist(node* head_);
+    linkedlist(node* head_, string sortmethod_);
     linkedlist();
     //copy 
     linkedlist(const linkedlist &other);
     // destructor
 
     void addnode(node newnode);
+    int getlength() const;
 };

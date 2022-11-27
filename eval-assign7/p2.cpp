@@ -29,12 +29,14 @@ void node::setnext(node* next_new){
     next = next_new;
 }
 
-linkedlist::linkedlist(node* head_){
+linkedlist::linkedlist(node* head_, string sortmethod_){
     head = head_;
+    sortmethod = sortmethod_;
 }
 
 linkedlist::linkedlist(){
     head = nullptr;
+    sortmethod = "length";
 }
 
 // deep copies copy constructor
@@ -57,7 +59,7 @@ linkedlist::linkedlist(const linkedlist &other){
 node* linkedlist::gethead() const {
     return head;
 }
-/*
+
 string linkedlist::getsortmethod() const{
     return sortmethod;
 }
@@ -65,7 +67,7 @@ void linkedlist::setsortmethod(string newsortmethod){
     sortmethod = newsortmethod;
     // this should potentially re-sort the list too
 }
-*/
+
 
 void linkedlist::sethead(node* head_new){
     head = head_new;
@@ -76,15 +78,27 @@ void linkedlist::addnode(node newnode){
 
 }
 
+int linkedlist::getlength() const {
+    int len = 0;
+    node* curr = head;
+    while(curr != nullptr){
+        len++;
+        curr = curr->getnext();
+    }
+    return len;
+}
+
 
 
 int main(){
-    node node3("hey");
+    node node3("hey", nullptr);
     node node2("ya", &node3);
     node node1("man", &node2);
     // node1 -> node2 -> node3 -> null
-    linkedlist ll(&node1);
+    linkedlist ll(&node1, "length");
     linkedlist ll2 = ll;
+    node1.setstr("test");
     cout << ll2.gethead()->getstr() << ll.gethead()->getstr() << endl;
+    cout << ll.getlength() << endl;
     return 0;
 }
