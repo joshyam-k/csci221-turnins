@@ -98,6 +98,18 @@ string* linkedlist::toarray() const {
     return retarr;
 }
 
+string linkedlist::getstr_byindex(int index) const {
+    int len = this->getlength();
+    if(index >= len) {
+        cout << "index out of range \n";
+        return 0;
+    } else {
+        string* arr;
+        arr = this->toarray();
+        return arr[index];
+    }
+}
+
 void linkedlist::addnode(node newnode){
     // different comparison technique based on sorting method
 

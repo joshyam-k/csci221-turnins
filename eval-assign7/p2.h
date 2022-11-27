@@ -36,6 +36,7 @@ public:
     bool checksortlength() const;
     bool checksortascii() const;
     string* toarray() const;
+    string getstr_byindex(int index) const;
 };
 
 
