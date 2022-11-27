@@ -17,12 +17,12 @@ public:
 class linkedlist {
 private:
     node* head;
-    string sortmethod;
+   // string sortmethod;
 public:
     node* gethead() const;
-    string getsortmethod() const;
+    //string getsortmethod() const;
     void sethead(node* head_new);
-    void setsortmethod(string newsortmethod);
+    //void setsortmethod(string newsortmethod);
     // constructors
     linkedlist(node* head_);
     linkedlist();
