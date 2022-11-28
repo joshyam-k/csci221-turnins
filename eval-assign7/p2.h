@@ -30,7 +30,8 @@ public:
     //copy 
     linkedlist(const linkedlist &other);
     // destructor
-
+    ~linkedlist();
+    void rmvalue(string value);
     void addnode(node newnode);
     int getlength() const;
     bool checksortlength() const;

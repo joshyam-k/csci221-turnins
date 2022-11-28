@@ -39,6 +39,15 @@ linkedlist::linkedlist(){
     sortmethod = "length";
 }
 
+linkedlist::~linkedlist(){
+    node* curr = head;
+    while(curr != nullptr){
+        node* next = head->getnext();
+        delete curr;
+        curr = next;
+    }
+}
+
 // deep copies copy constructor
 linkedlist::linkedlist(const linkedlist &other){
     if (other.gethead() == nullptr){
@@ -84,6 +93,10 @@ bool linkedlist::checksortascii() const {
 
 void linkedlist::sethead(node* head_new){
     head = head_new;
+}
+
+void linkedlist::rmvalue(string value){
+
 }
 
 string* linkedlist::toarray() const {
