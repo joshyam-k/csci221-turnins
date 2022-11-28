@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <cmath>
 #include "p2.h"
-using namespace std;
+
 
 node::node(string str_, node* next_ = nullptr){
     str = str_;
@@ -43,7 +43,9 @@ linkedlist::~linkedlist(){
     node* curr = head;
     while(curr != nullptr){
         node* next = head->getnext();
-        delete curr;
+        node* temp = new node;
+        temp = curr;
+        delete temp;
         curr = next;
     }
 }
@@ -96,7 +98,32 @@ void linkedlist::sethead(node* head_new){
 }
 
 void linkedlist::rmvalue(string value){
-
+    node* headcp = head;
+    // case for when the head node contains the value
+    if(headcp != nullptr && headcp->getstr() == value){
+        node* todelete = new node();
+        todelete = head;
+        delete todelete;
+        head = headcp->getnext();
+    }
+    node* curr = head;
+    node* prev = nullptr;
+    while(curr != nullptr){
+        if(curr->getstr() != value){
+            prev = curr;
+            curr = curr->getnext();
+        } else {
+            // create a temp pointer the node to be deleted
+            node* temp = new node();
+            temp = curr;
+            prev->setnext(curr->getnext());
+            // prev unchanged
+            // delete the node
+            delete temp;
+            // move curr
+            curr = curr->getnext();
+        } 
+    }
 }
 
 string* linkedlist::toarray() const {
@@ -150,5 +177,8 @@ int main(){
     node1.setstr("test");
     cout << ll2.gethead()->getstr() << ll.gethead()->getstr() << endl;
     cout << ll.getlength() << endl;
+    cout << "it was " << ll.gethead()->getnext()->getstr() << endl;
+    ll.rmvalue("ya");
+    cout << "now it is " << ll.gethead()->getnext()->getstr() << endl;
     return 0;
 }
