@@ -5,8 +5,8 @@
 
 
 node::node(string str_, node* next_ = nullptr){
-    str = str_;
-    next = next_;
+    setstr(str_);
+    setnext(next_);
 }
 
 node::node(){
@@ -31,13 +31,13 @@ void node::setnext(node* next_new){
 }
 
 linkedlist::linkedlist(node* head_, string sortmethod_){
-    head = head_;
-    sortmethod = sortmethod_;
+    sethead(head_);
+    setsortmethod(sortmethod_);
 }
 
 linkedlist::linkedlist(){
-    head = nullptr;
-    sortmethod = "length";
+    sethead(nullptr);
+    setsortmethod("length");
 }
 /*
 linkedlist::~linkedlist(){
@@ -177,11 +177,31 @@ bool linkedlist::compare_ascii(string a, string b){
 void linkedlist::insert_by_length(node* newnode){
     int len = newnode->getstr().length();
     node* curr = head;
+    node* prev = nullptr;
+    if(curr != nullptr && len < curr->getstr().length()){
+        // then the new node should be the head
+        newnode->setnext(curr);
+        this->sethead(newnode);
+        return;
+    }
     while(curr->getnext() != nullptr && curr->getstr().length() < len){
+        prev = curr;
         curr = curr->getnext();
     }
-    newnode->setnext(curr->getnext());
-    curr->setnext(newnode);
+    if(curr->getnext() == nullptr){
+        if(curr->getstr().length() >= len){
+            newnode->setnext(curr);
+            prev->setnext(newnode);
+            return;
+        }
+        newnode->setnext(curr->getnext());
+        curr->setnext(newnode);
+        return;
+    } else {
+        newnode->setnext(curr);
+        prev->setnext(newnode);
+        return;
+    }
 }
 
 void linkedlist::insert_by_ascii(node* newnode){
@@ -195,9 +215,13 @@ void linkedlist::insert_by_ascii(node* newnode){
 }
 
 void linkedlist::insert_node(string str_in){
-    node nn(str_in, nullptr);
-    node* nn_ptr = new node();
-    nn_ptr = &nn;
+    //node nn(str_in, nullptr);
+    node* nn_ptr = new node(str_in, nullptr);
+    //nn_ptr = &nn;
+    if(head == nullptr){
+        sethead(nn_ptr);
+        return;
+    }
     // different comparison technique based on sorting method
     if(sortmethod == "length"){
         this->insert_by_length(nn_ptr);
@@ -219,14 +243,11 @@ int linkedlist::getlength() const {
 
 
 int main(){
-    node node3("hey", nullptr);
-    node node2("ya", &node3);
-    node node1("man", &node2);
-    // node1 -> node2 -> node3 -> null
-    linkedlist ll(&node1, "length");
-    linkedlist ll2 = ll;
-    node1.setstr("test");
-    cout << ll2.gethead()->getstr() << ll.gethead()->getstr() << endl;
-    cout << ll.getlength() << endl;
+    linkedlist ll(nullptr, "length");
+    ll.insert_node("test");
+    ll.insert_node("ti");
+    ll.insert_node("jos");
+    ll.insert_node("joshy");
+    cout << ll.gethead()->getstr() << ll.gethead()->getnext()->getstr() << ll.gethead()->getnext()->getnext()->getstr() << ll.gethead()->getnext()->getnext()->getnext()->getstr() << endl;
     return 0;
 }
