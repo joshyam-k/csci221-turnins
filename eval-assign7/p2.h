@@ -30,7 +30,8 @@ public:
     //copy 
     linkedlist(const linkedlist &other);
     // destructor
-   // ~linkedlist();
+     ~linkedlist();
+    void view() const;
     void rmvalue(string value);
     void insert_node(string str_in);
     bool compare_ascii(string a, string b);

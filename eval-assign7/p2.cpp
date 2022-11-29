@@ -39,7 +39,7 @@ linkedlist::linkedlist(){
     sethead(nullptr);
     setsortmethod("length");
 }
-/*
+
 linkedlist::~linkedlist(){
     node* curr = head;
     while(curr != nullptr){
@@ -50,7 +50,7 @@ linkedlist::~linkedlist(){
         curr = next;
     }
 }
-*/
+
 // deep copies copy constructor
 linkedlist::linkedlist(const linkedlist &other){
     if (other.gethead() == nullptr){
@@ -98,7 +98,6 @@ void linkedlist::sethead(node* head_new){
     head = head_new;
 }
 
-/*
 void linkedlist::rmvalue(string value){
     node* headcp = head;
     // case for when the head node contains the value
@@ -127,7 +126,7 @@ void linkedlist::rmvalue(string value){
         } 
     }
 }
-*/
+
 
 string* linkedlist::toarray() const {
     
@@ -206,12 +205,32 @@ void linkedlist::insert_by_length(node* newnode){
 
 void linkedlist::insert_by_ascii(node* newnode){
     node* curr = head;
-    // while the next node is not null AND newnode_ascii < curr_ascii
-    while(curr->getnext() != nullptr && compare_ascii(newnode->getstr(), curr->getstr())){
+    node* prev = nullptr;
+    if(curr != nullptr && compare_ascii(newnode->getstr(), curr->getstr())){
+        // if newnode < head then new node should be the head
+        newnode->setnext(curr);
+        this->sethead(newnode);
+        return;
+    }
+    // while the next node is not null AND curr_ascii < newnode_ascii then move forward
+    while(curr->getnext() != nullptr && compare_ascii(curr->getstr(), newnode->getstr())){
+        prev = curr;
         curr = curr->getnext();
     }
-    newnode->setnext(curr->getnext());
-    curr->setnext(newnode);
+    if(curr->getnext() == nullptr){
+        if(!compare_ascii(curr->getstr(), newnode->getstr())){
+            // if newnode_ascii <= curr_ascii
+            newnode->setnext(curr);
+            prev->setnext(newnode);
+            return;
+        }
+        newnode->setnext(curr->getnext());
+        curr->setnext(newnode);
+    } else {
+        newnode->setnext(curr);
+        prev->setnext(newnode);
+        return;
+    }
 }
 
 void linkedlist::insert_node(string str_in){
@@ -240,6 +259,14 @@ int linkedlist::getlength() const {
     return len;
 }
 
+void linkedlist::view() const {
+    node* curr = head;
+    while(curr != nullptr){
+        cout << curr->getstr() << endl;
+        curr = curr->getnext();
+    }
+}
+
 
 
 int main(){
@@ -248,6 +275,8 @@ int main(){
     ll.insert_node("ti");
     ll.insert_node("jos");
     ll.insert_node("joshy");
-    cout << ll.gethead()->getstr() << ll.gethead()->getnext()->getstr() << ll.gethead()->getnext()->getnext()->getstr() << ll.gethead()->getnext()->getnext()->getnext()->getstr() << endl;
+    ll.view();
+    ll.rmvalue("test");
+    ll.view();
     return 0;
 }
