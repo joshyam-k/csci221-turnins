@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string>
 #include <cmath>
 #include "p2.h"
 
@@ -38,7 +39,7 @@ linkedlist::linkedlist(){
     head = nullptr;
     sortmethod = "length";
 }
-
+/*
 linkedlist::~linkedlist(){
     node* curr = head;
     while(curr != nullptr){
@@ -49,7 +50,7 @@ linkedlist::~linkedlist(){
         curr = next;
     }
 }
-
+*/
 // deep copies copy constructor
 linkedlist::linkedlist(const linkedlist &other){
     if (other.gethead() == nullptr){
@@ -97,6 +98,7 @@ void linkedlist::sethead(node* head_new){
     head = head_new;
 }
 
+/*
 void linkedlist::rmvalue(string value){
     node* headcp = head;
     // case for when the head node contains the value
@@ -125,6 +127,7 @@ void linkedlist::rmvalue(string value){
         } 
     }
 }
+*/
 
 string* linkedlist::toarray() const {
     
@@ -150,9 +153,47 @@ string linkedlist::getstr_byindex(int index) const {
     }
 }
 
-void linkedlist::addnode(node newnode){
-    // different comparison technique based on sorting method
+// returns true if ascii encoding of a < ascii encoding b
+bool linkedlist::compare_ascii(string a, string b){
+    bool done = false;
+    int i = 0;
+    while(!done){    
+        if(a[i] == b[i]){
+            i++;
+            continue;
+        }
+        if(int(a[i]) < int(b[i])){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
 
+void linkedlist::insert_by_length(node* newnode){
+    int len = newnode->getstr().length();
+    node* curr = head;
+    while(curr->getnext() != nullptr && curr->getstr().length() < len){
+        curr = curr->getnext();
+    }
+    newnode->setnext(curr->getnext());
+    curr->setnext(newnode);
+}
+
+void linkedlist::insert_by_ascii(node* newnode){
+
+}
+
+void linkedlist::insert_node(string str_in){
+    node nn(str_in, nullptr);
+    node* nn_ptr = new node();
+    nn_ptr = &nn;
+    // different comparison technique based on sorting method
+    if(sortmethod == "length"){
+        this->insert_by_length(nn_ptr);
+    } else if(sortmethod == "ascii"){
+        this->insert_by_ascii(nn_ptr);
+    }
 }
 
 int linkedlist::getlength() const {
@@ -177,8 +218,5 @@ int main(){
     node1.setstr("test");
     cout << ll2.gethead()->getstr() << ll.gethead()->getstr() << endl;
     cout << ll.getlength() << endl;
-    cout << "it was " << ll.gethead()->getnext()->getstr() << endl;
-    ll.rmvalue("ya");
-    cout << "now it is " << ll.gethead()->getnext()->getstr() << endl;
     return 0;
 }

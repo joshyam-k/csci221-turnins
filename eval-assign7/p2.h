@@ -30,9 +30,12 @@ public:
     //copy 
     linkedlist(const linkedlist &other);
     // destructor
-    ~linkedlist();
+   // ~linkedlist();
     void rmvalue(string value);
-    void addnode(node newnode);
+    void insert_node(string str_in);
+    bool compare_ascii(string a, string b);
+    void insert_by_length(node* newnode);
+    void insert_by_ascii(node* newnode);
     int getlength() const;
     bool checksortlength() const;
     bool checksortascii() const;
