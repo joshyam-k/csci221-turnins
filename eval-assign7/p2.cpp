@@ -156,6 +156,7 @@ string linkedlist::getstr_byindex(int index) const {
 // returns true if ascii encoding of a < ascii encoding b
 bool linkedlist::compare_ascii(string a, string b){
     bool done = false;
+    bool ret;
     int i = 0;
     while(!done){    
         if(a[i] == b[i]){
@@ -163,11 +164,14 @@ bool linkedlist::compare_ascii(string a, string b){
             continue;
         }
         if(int(a[i]) < int(b[i])){
-            return true;
+            done = true;
+            ret = true;
         } else {
-            return false;
+            done = true;
+            ret = false;
         }
     }
+    return ret;
 }
 
 void linkedlist::insert_by_length(node* newnode){
@@ -181,7 +185,13 @@ void linkedlist::insert_by_length(node* newnode){
 }
 
 void linkedlist::insert_by_ascii(node* newnode){
-
+    node* curr = head;
+    // while the next node is not null AND newnode_ascii < curr_ascii
+    while(curr->getnext() != nullptr && compare_ascii(newnode->getstr(), curr->getstr())){
+        curr = curr->getnext();
+    }
+    newnode->setnext(curr->getnext());
+    curr->setnext(newnode);
 }
 
 void linkedlist::insert_node(string str_in){
