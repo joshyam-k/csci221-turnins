@@ -78,6 +78,7 @@ string linkedlist::getsortmethod() const {
 void linkedlist::setsortmethod(string newsortmethod){
     sortmethod = newsortmethod;
     // this should potentially re-sort the list too
+    this->sort();
 }
 
 bool linkedlist::checksortlength() const {
@@ -259,6 +260,15 @@ int linkedlist::getlength() const {
     return len;
 }
 
+void linkedlist::sort() {
+    int count = this->getlength();
+    string* arr = this->toarray();
+    this->~linkedlist();
+    for(int i = 0; i < count; i++){
+        this->insert_node(arr[i]);
+    }
+}
+
 void linkedlist::view() const {
     node* curr = head;
     while(curr != nullptr){
@@ -269,14 +279,28 @@ void linkedlist::view() const {
 
 
 
+
 int main(){
-    linkedlist ll(nullptr, "length");
-    ll.insert_node("test");
-    ll.insert_node("ti");
-    ll.insert_node("jos");
-    ll.insert_node("joshy");
+    // init
+    linkedlist ll(nullptr, "ascii");
+    // insert node recognizes the sort method and adds them accordingly
+    ll.insert_node("Zap");
+    ll.insert_node("Botanical");
+    ll.insert_node("Saint");
+    ll.insert_node("Gander");
     ll.view();
-    ll.rmvalue("test");
+    // if we change the sort method it re-sorts the list
+    ll.setsortmethod("length");
     ll.view();
+    // we can remove values
+    ll.rmvalue("Zap");
+    ll.view();
+    // we can insert values 
+    ll.insert_node("joshyamamoto");
+    ll.view();
+    // we can get a string by its index (1 base index is used here)
+    cout << ll.getstr_byindex(1) << endl;
+    // we can free our linked list using our destructor
+    ll.~linkedlist();
     return 0;
 }

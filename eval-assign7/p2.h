@@ -42,6 +42,7 @@ public:
     bool checksortascii() const;
     string* toarray() const;
     string getstr_byindex(int index) const;
+    void sort();
 };
 
 
