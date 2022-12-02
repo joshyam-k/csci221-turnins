@@ -2,7 +2,8 @@
 #include <iostream>
 
 int main(){
-    BSTNode<int> bstn(5);
-    cout << bstn.getData();
+    BST<int> bst;
+    bst.addNode(6);
+    cout << bst.getCount();
     return 0;
 }
