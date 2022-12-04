@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <vector>
+#include <list>
+using namespace std;
+
+class car {
+private:
+    double x;
+    double y;
+    double mpg;
+    double tank_size;
+    double current_fuel;
+public:
+    double getx() const;
+    double gety() const;
+    double getmpg() const;
+    double gettank_size() const;
+    double getcurrent_fuel() const;
+    void setx(double newx);
+    void sety(double newy);
+    void setmpg(double newmpg);
+    void settank_size(double newtank_size);
+    void setcurrent_fuel(double newcurrent_fuel);
+    bool move_to(double xnew, double ynew);
+    car(double x_, double y_, double mpg_, double tank_size_, double current_fuel_);
+    car();
+    car(const car &other);
+};
+
+class bus : public car {
+private:
+    int max_passengers;
+    vector<int> stop_numbers;
+    double gas_penalty;
+public:
+    bus();
+    bus(double x, double y, double mpg, double tank_size, double current_fuel, int max_passengers_, vector<int> stop_numbers_, double gas_penalty_);
+    int getmax_passengers() const;
+    vector<int> getstop_numbers() const;
+    double getgas_penalty()const;
+    void setmax_passengers(int max_passengers_);
+    void setstop_numbers(vector<int> stop_numbers_);
+    void setgas_penalty(double gas_penalty_);
+    list<int> generate_route(int starting_stop);
+    bool move_to(double xnew, double ynew);
+};
