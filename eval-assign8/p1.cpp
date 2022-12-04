@@ -169,7 +169,7 @@ list<int> bus::generate_route(int starting_stop) {
 
 bool bus::move_to(double xnew, double ynew) {
     double dist = sqrt(pow((xnew - getx()), 2) + pow((ynew - gety()), 2));
-    double weighted_mpg = getmpg()*getgas_penalty()*getstop_numbers().size()
+    double weighted_mpg = getmpg()*getgas_penalty()*getstop_numbers().size();
     double max_dist = weighted_mpg * getcurrent_fuel();
     double fuel_used = weighted_mpg / dist;
     if (dist <= max_dist){
@@ -179,6 +179,58 @@ bool bus::move_to(double xnew, double ynew) {
         return true;
     }
     return false;
+}
+
+void medical_center::addProvider(string name, string role) {
+    providers[name] = role;
+}
+
+void medical_center::addPatient(string name, string condition) {
+    patients[name] = condition;
+}
+
+string medical_center::getProviderRole(string name) {
+    return providers[name];
+}
+
+string medical_center::getPatientCondition(string name) {
+    return patients[name];
+}
+
+int ambulance::getmax_patients() const {
+    return max_patients;
+}
+
+int ambulance::getmax_capacity() const {
+    return max_capacity;
+}
+
+double ambulance::getgas_penalty() const {
+    return gas_penalty;
+}
+
+void ambulance::setmax_patients(int max_patients_) {
+    max_patients = max_patients_;
+}
+
+void ambulance::setmax_capacity(int max_capacity_) {
+    max_capacity = max_capacity_;
+}
+
+void ambulance::setgas_penalty(double gas_penalty_) {
+    gas_penalty = gas_penalty_;
+}
+
+ambulance::ambulance() : car() {
+    setmax_patients(0);
+    setmax_capacity(0);
+    setgas_penalty(0);
+}
+
+ambulance::ambulance(double x, double y, double mpg, double tank_size, double current_fuel, int max_patients, int max_capacity, int gas_penalty) : car(x, y, mpg, tank_size, current_fuel) {
+    setmax_patients(maxpatients);
+    setmax_capacity(max_capacity);
+    setgas_penalty(gas_penalty);
 }
 
 
@@ -191,11 +243,15 @@ int main(){
     v.push_back(5);
     v.push_back(1);
     v.push_back(10);
-    bus bus1(5, v, 1.2);
+    bus bus1(0, 0, 20, 40, 15, 5, v, 0.02);
     list<int> out = bus1.generate_route(10);
     for (auto it = out.begin(); it != out.end(); ++it) {
     // Print the current element
     cout << *it << " ";
     }
+
+    bool test = bus1.move_to(1,1);
+    cout << endl << test << endl;
+
     return 0;
 }
