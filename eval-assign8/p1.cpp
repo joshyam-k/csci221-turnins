@@ -205,6 +205,14 @@ int ambulance::getmax_capacity() const {
     return max_capacity;
 }
 
+int ambulance::getn_passengers() const {
+    return n_passengers;
+}
+
+int ambulance::getn_providers() const {
+    return n_providers;
+}
+
 double ambulance::getgas_penalty() const {
     return gas_penalty;
 }
@@ -217,6 +225,15 @@ void ambulance::setmax_capacity(int max_capacity_) {
     max_capacity = max_capacity_;
 }
 
+void ambulance::setn_passengers(int n_passengers_) {
+    n_passengers = n_passengers_;
+}
+
+void ambulance::setn_providers(int n_providers_) {
+    n_providers = n_providers_;
+}
+
+
 void ambulance::setgas_penalty(double gas_penalty_) {
     gas_penalty = gas_penalty_;
 }
@@ -224,13 +241,56 @@ void ambulance::setgas_penalty(double gas_penalty_) {
 ambulance::ambulance() : car() {
     setmax_patients(0);
     setmax_capacity(0);
+    setn_passengers(0);
+    setn_providers(1);
     setgas_penalty(0);
 }
 
-ambulance::ambulance(double x, double y, double mpg, double tank_size, double current_fuel, int max_patients, int max_capacity, int gas_penalty) : car(x, y, mpg, tank_size, current_fuel) {
-    setmax_patients(maxpatients);
+ambulance::ambulance(double x, double y, double mpg, double tank_size, double current_fuel, int max_patients, int max_capacity, int n_passengers, int n_providers, double gas_penalty) : car(x, y, mpg, tank_size, current_fuel) {
+    setmax_patients(max_patients);
     setmax_capacity(max_capacity);
+    setn_passengers(n_passengers);
+    setn_providers(n_providers);
     setgas_penalty(gas_penalty);
+}
+
+bool ambulance::move_to(double xnew, double ynew) {
+    double dist = sqrt(pow((xnew - getx()), 2) + pow((ynew - gety()), 2));
+    double weighted_mpg = getmpg()*getgas_penalty()*(getn_passengers() + getn_providers());
+    double max_dist = weighted_mpg * getcurrent_fuel();
+    double fuel_used = weighted_mpg / dist;
+    if (dist <= max_dist){
+        setx(xnew);
+        sety(ynew);
+        setcurrent_fuel(getcurrent_fuel() - fuel_used);
+        return true;
+    }
+    return false;
+}
+
+template<class T>
+T* which_can_move(T* array, int array_length, int* return_length,  double x, double y){
+    // count how many can move
+    int n_can_move = 0;
+    for(int i = 0; i < array_length; i++){
+        T test = array[i];
+        if (test.move_to(x, y) == true){
+            n_can_move++;
+        }
+    }
+    // return length of return array via indirection
+    *return_length = n_can_move;
+    // allocate space on heap for array of appropriate size and fill it with copies of the cars that can move
+    T* return_array = new T[n_can_move];
+    for(int i = 0, j = 0; i < array_length; i++){
+       T vehicle = array[i];
+       bool check = vehicle.move_to(x, y);
+       if (check == true){
+           return_array[j] = vehicle;
+           j++;
+       }
+    }
+    return return_array;
 }
 
 

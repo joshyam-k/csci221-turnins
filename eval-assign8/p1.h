@@ -66,15 +66,21 @@ class ambulance : public car, public medical_center {
 private:
     int max_patients;
     int max_capacity;
+    int n_passengers;
+    int n_providers;
     double gas_penalty;
 public:
     int getmax_patients() const;
     int getmax_capacity() const;
+    int getn_passengers() const;
+    int getn_providers() const;
     double getgas_penalty() const;
     void setmax_patients(int max_patients_);
     void setmax_capacity(int max_capacity_);
+    void setn_passengers(int n_passengers_);
+    void setn_providers(int n_providers_);
     void setgas_penalty(double gas_penalty_);
     ambulance();
-    ambulance(double x, double y, double mpg, double tank_size, double current_fuel, int max_patients, int max_capacity, int gas_penalty);
+    ambulance(double x, double y, double mpg, double tank_size, double current_fuel, int max_patients, int max_capacity, int n_passengers, int n_providers, double gas_penalty);
     bool move_to(double xnew, double ynew);
 }
