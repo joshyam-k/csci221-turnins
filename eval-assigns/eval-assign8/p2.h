@@ -21,10 +21,10 @@ public:
   void setParent(const weak_ptr<BSTNode<T> >& parent_);
 
 private:
-  std::unique_ptr<T> data;
-  std::shared_ptr<BSTNode<T> > left;
-  std::shared_ptr<BSTNode<T> > right;
-  std::weak_ptr<BSTNode<T> > parent;
+  unique_ptr<T> data;
+  shared_ptr<BSTNode<T> > left;
+  shared_ptr<BSTNode<T> > right;
+  weak_ptr<BSTNode<T> > parent;
 };
 
 
@@ -205,7 +205,7 @@ void BinarySearchTree<T>::insert(const T& data_) {
     return;
   }
 
-  std::shared_ptr<BSTNode<T> > current = root;
+  shared_ptr<BSTNode<T> > current = root;
   while (true) {
     if (data_ < *(current->getData())) {
       if (current->getLeft() == nullptr) {
